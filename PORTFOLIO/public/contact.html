@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="body">
+
+<div class="contact-form">
+    <h2>Get in Touch</h2>
+    <form action="https://api.web3forms.com/submit" method="POST">
+        <form action="http://localhost:3000/api/contact" method="POST">
+
+        <!-- Your Web3Forms access key -->
+        <input type="hidden" name="access_key" value="1f3c2ba3-e42b-46f3-baa7-01f5495b1de9">
+        <input type="hidden" name="replyto" value="arjunksc43@gmail.com@gmail.com" />
+        <input type="hidden" name="from_name" value="Message from POrtfolio">
+        <input type="text" name="name" placeholder="Your name" required class="input-group">
+        <input type="email" name="email" placeholder="Your email" required class="email"><br><br>
+        <textarea name="message" placeholder="Message" rows="4" required class="input-group"></textarea>
+        <center>
+        <div class="h-captcha" data-captcha="true" ></div>
+         </center>
+
+        <button type="submit">Send Message</button>
+
+    </form>
+    <script src="https://web3forms.com/client/script.js" async defer></script>
+</div>
+</body>
+</html>
