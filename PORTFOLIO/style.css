@@ -39,6 +39,7 @@ nav {
   list-style: none;
   display: flex;
   gap: 1.5rem;
+
 }
 
 .nav-links a {
@@ -85,10 +86,9 @@ a {
   text-decoration: none;
 }
 .skills h3 :hover{
-  background-color: aqua;
-border: aqua;
-border-radius: 60px;
-backdrop: filter 10px;
+  border: aqua 40px;
+  border-radius: 40px;
+    
 }
 
 .body {
@@ -170,6 +170,53 @@ button:hover {
     font-size: 14px;
   }
 }
-.contact1{
 
+#message{
+  text-align: center;
+  align-items: center;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  color: white;
+}
+#message:hover{
+  color: blue;
+}
+@keyframes glow {
+  0% {
+    filter: drop-shadow(0 0 0 aqua);
+  }
+  100% {
+    filter: drop-shadow(0 0 8px aqua);
+  }
+}
+
+#icon :hover{
+  
+ animation: glow 0.3s forwards;
+}
+#message a{
+  color: red;
+}
+nav {
+  border-bottom: 2px solid #ffffff; /* White bottom border */
+  padding-bottom: 10px; /* Optional spacing */
+}
+header {
+  border-bottom: 2px solid #ffffff;
+}
+.nav-links a {
+  color: black;                 /* Black text */
+  border: 1px solid white;      /* White border */
+  padding: 6px 12px;            /* Some spacing inside the border */
+  text-decoration: none;        /* Remove underline */
+  margin: 0 5px;                /* Space between items */
+  display: inline-block;        /* Ensure padding and border apply nicely */
+  border-radius: 40px;           /* Optional: rounded corners */
+  transition: background 0.3s;  /* Optional: smooth hover effect */
+   animation: glow 0.3s forwards;
+}
+
+.nav-links a {
+  background: white;            /* Optional: hover effect */
+  color: black;                 /* Keep text black on hover */
+  
 }
