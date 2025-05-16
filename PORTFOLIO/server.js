@@ -3,13 +3,18 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
 
+
+// Models
+const Project = require('./models/project');
+const Contact = require('./models/contact');
+
 // Initialize app
 const app = express();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public'))); // Serve your HTML/CSS/JS
+app.use(express.static(path.join(__dirname, 'public'))); // Serve HTML/CSS/JS
 
 // Connect to MongoDB
 mongoose.connect('mongodb://localhost:27017/projectsDB', {
@@ -19,13 +24,7 @@ mongoose.connect('mongodb://localhost:27017/projectsDB', {
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.error('MongoDB connection error:', err));
 
-// Mongoose Schema and Model
-const projectSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  description: { type: String, required: true }
-}, { timestamps: true });
-
-const Project = mongoose.model('Project', projectSchema);
+/* ------------------ PROJECT ROUTES ------------------ */
 
 // GET all projects
 app.get('/api/services', async (req, res) => {
@@ -54,36 +53,9 @@ app.post('/api/services', async (req, res) => {
   }
 });
 
-// Start server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+/* ------------------ CONTACT ROUTE ------------------ */
 
-
-
-
-
-
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const Contact = require('./models/contact');
-
-const app = express();
-const PORT = 3000;
-
-// Middleware
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// MongoDB connection
-mongoose.connect('mongodb://localhost:27017/portfolio', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}).then(() => console.log('MongoDB connected'))
-  .catch(err => console.error('MongoDB connection error:', err));
-
-// Routes
+// POST: Save contact form data
 app.post('/api/contact', async (req, res) => {
   const { name, email, message } = req.body;
 
@@ -94,11 +66,19 @@ app.post('/api/contact', async (req, res) => {
   try {
     const newContact = new Contact({ name, email, message });
     await newContact.save();
-    res.status(201).json({ message: 'Message received!' });
+    res.status(201).json({ message: 'Message saved to MongoDB' });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Server error' });
+    console.error('Error saving contact:', err);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+// Start server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+
+
+
+
+

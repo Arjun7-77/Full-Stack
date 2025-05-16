@@ -1,33 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Form</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Form</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body class="body">
 
 <div class="contact-form">
-    <h2>Get in Touch</h2>
-    <form action="https://api.web3forms.com/submit" method="POST">
-        <form action="http://localhost:3000/api/contact" method="POST">
-
-        <!-- Your Web3Forms access key -->
-        <input type="hidden" name="access_key" value="1f3c2ba3-e42b-46f3-baa7-01f5495b1de9">
-        <input type="hidden" name="replyto" value="arjunksc43@gmail.com@gmail.com" />
-        <input type="hidden" name="from_name" value="Message from POrtfolio">
-        <input type="text" name="name" placeholder="Your name" required class="input-group">
-        <input type="email" name="email" placeholder="Your email" required class="email"><br><br>
-        <textarea name="message" placeholder="Message" rows="4" required class="input-group"></textarea>
-        <center>
-        <div class="h-captcha" data-captcha="true" ></div>
-         </center>
-
-        <button type="submit">Send Message</button>
-
-    </form>
-    <script src="https://web3forms.com/client/script.js" async defer></script>
+  <h2>Get in Touch</h2>
+  <form id="contact-form">
+    <input type="text" name="name" placeholder="Your name" required id="name"><br><br>
+    <input type="email" name="email" placeholder="Your email" required id="email"><br><br>
+    <!-- ✅ Fixed id from message2 → message -->
+    <textarea name="message" placeholder="Your message" required id="message"></textarea><br><br>
+    <button type="submit">Send Message</button>
+  </form>
 </div>
+
+<script>
+  const form = document.getElementById("contact-form");
+  const nameInput = document.getElementById("name");
+  const emailInput = document.getElementById("email");
+  const messageInput = document.getElementById("message"); // ✅ this now matches the textarea id
+
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const name = nameInput.value.trim();
+    const email = emailInput.value.trim();
+    const message = messageInput.value.trim();
+
+    if (!name || !email || !message) {
+      alert("Please fill in all fields");
+      return;
+    }
+
+    const formData = { name, email, message };
+
+    try {
+      const res = await fetch("http://localhost:3000/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Something went wrong");
+      }
+
+      alert("Message sent successfully!");
+      form.reset();
+    } catch (err) {
+      alert("Error: " + err.message);
+      console.error("Submit error:", err);
+    }
+  });
+</script>
+
 </body>
 </html>
